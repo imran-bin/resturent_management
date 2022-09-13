@@ -12,7 +12,7 @@
               <span class="count bg-success"></span>
             </div>
             <div class="profile-name">
-              <h5 class="mb-0 font-weight-normal">Henry Klein</h5>
+              <h5 class="mb-0 font-weight-normal">{{Auth::user()->name}}</h5>
               <span>Gold Member</span>
             </div>
           </div>
@@ -89,13 +89,14 @@
         </a>
       </li>
       <li class="nav-item menu-items">
-        <a class="nav-link" href="pages/tables/basic-table.html">
+        <a class="nav-link" href="{{route('admin.reservation')}}">
           <span class="menu-icon">
-            <i class="mdi mdi-table-large"></i>
+            <i class="mdi mdi-playlist-play"></i>
           </span>
           <span class="menu-title">Reservation</span>
         </a>
       </li>
+       
       
     </ul>
   </nav>
