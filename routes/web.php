@@ -30,6 +30,8 @@ Route::post('admin/food/update/{id}',[AdminController::class,'food_update'])->na
 Route::post('user/reservation',[AdminController::class,'user_reservation'])->name('user.reservation');
 Route::get('admin/reservation',[AdminController::class,'admin_reservation'])->name('admin.reservation');
 Route::get('admin/status/{id}',[AdminController::class,'admin_status'])->name('admin.status');
+Route::get('admin/chefs',[AdminController::class,'admin_chefs'])->name('admin.chefs');
+Route::post('admin/chefs/upload',[AdminController::class,'admin_chefs_upload'])->name('admin.chefs_upload');
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

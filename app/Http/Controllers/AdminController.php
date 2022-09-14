@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Chefs;
 use App\Models\Food;
 use App\Models\Reservation;
 use App\Models\User;
@@ -88,5 +89,22 @@ class AdminController extends Controller
         $data->status='success';
         $data->save();
         return redirect()->back();
+    }
+    public function admin_chefs( )
+    {
+        return view('Admin.chefs_create');
+    }
+    public function admin_chefs_upload(Request $request)
+    {
+        $chefs=new Chefs;
+        $image=$request->image;
+         $imageName=time().'.'.$image->getClientOriginalExtension();
+         $request->image->move('chefsImage',$imageName);
+         $chefs->name=$request->name;
+         $chefs->specialsity=$request->special;
+         $chefs->image=$imageName;
+         $chefs->save();
+         return redirect()->back();
+
     }
 }
