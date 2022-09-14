@@ -32,6 +32,12 @@ Route::get('admin/reservation',[AdminController::class,'admin_reservation'])->na
 Route::get('admin/status/{id}',[AdminController::class,'admin_status'])->name('admin.status');
 Route::get('admin/chefs',[AdminController::class,'admin_chefs'])->name('admin.chefs');
 Route::post('admin/chefs/upload',[AdminController::class,'admin_chefs_upload'])->name('admin.chefs_upload');
+Route::get('admin/chefs/delete/{id}',[AdminController::class,'admin_chefs_delete'])->name('admin.chefs.delete');
+Route::get('admin/chefs/edit/{id}',[AdminController::class,'admin_chefs_edit'])->name('admin.chefs.edit');
+Route::post('admin/chefs/update/{id}',[AdminController::class,'admin_chefs_update'])->name('admin.chefs_update');
+Route::post('user/food/cart/{id}',[AdminController::class,'user_food_cart'])->name('user.food.cart');
+Route::get('user/cart/info/{id}',[AdminController::class,'user_cart_info'])->name('user.cart.info');
+Route::get('user/cart/remove/{id}',[AdminController::class,'user_cart_remove'])->name('user.cart.remove');
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Chefs;
 use App\Models\Food;
-use Illuminate\Http\Request;
+ 
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -13,13 +14,16 @@ class HomeController extends Controller
     {
         $foods =Food ::all();
         $chefs=Chefs::all();
+        $id=Auth::id();
+            $count=Cart::where('user_id',$id)->count();
 
-        return view('home',compact('foods','chefs'));
+        return view('home',compact('foods','chefs','count' ));
     }
     public function redirect( )
     {
         $foods =Food ::all();
         $chefs=Chefs::all();
+    
         $userType=Auth::user()->usertype;
         if($userType=='1')
         {
@@ -27,7 +31,9 @@ class HomeController extends Controller
         }
         else
         {
-            return view('home',compact('foods','chefs')); 
+            $id=Auth::id();
+            $count=Cart::where('user_id',$id)->count();
+            return view('home',compact('foods','chefs','count')); 
         }
     }
 }

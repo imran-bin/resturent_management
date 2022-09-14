@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Chefs;
 use App\Models\Food;
 use App\Models\Reservation;
 use App\Models\User;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 class AdminController extends Controller
 {
     public function users( )
@@ -92,7 +93,8 @@ class AdminController extends Controller
     }
     public function admin_chefs( )
     {
-        return view('Admin.chefs_create');
+       $chefs=Chefs::all();
+        return view('Admin.chefs_create',compact('chefs'));
     }
     public function admin_chefs_upload(Request $request)
     {
@@ -106,5 +108,68 @@ class AdminController extends Controller
          $chefs->save();
          return redirect()->back();
 
+    }
+    public function admin_chefs_delete($id)
+    {
+       $chefs=Chefs::find($id);
+       $chefs->delete();
+       return redirect()->back();
+    }
+    public function admin_chefs_edit($id)
+    {
+       $chefs=Chefs::find($id);
+       
+       return  view('Admin.chefs_edit',compact('chefs'));
+    }
+    public function admin_chefs_update(Request $request,$id)
+    {
+         $chefs=Chefs::find($id);
+         $image=$request->image;
+         if($image)
+         {
+            $imageName=time().'.'.$image->getClientOriginalExtension();
+            $request->image->move('chefsImage',$imageName);
+            $chefs->image=$imageName;
+         }
+        
+         $chefs->specialsity=$request->special;
+         $chefs->name=$request->name;
+         $chefs->save();
+         return redirect()->route('admin.chefs');
+    }
+    public function user_food_cart(Request $request,$id)
+    {
+        
+        if(Auth::id())
+        {
+            $cart=new Cart;
+            $food_price=Food::find($id);
+            $cart->user_id=Auth::id();
+            $cart->food_id=$id;
+            $cart->quantity=$request->quantity;
+            $cart->price=$request->quantity * $food_price->price ;
+       
+            $cart->save();
+            return redirect()->back();
+        }
+        else
+        {
+            return redirect('login');
+        }
+    }
+    public function user_cart_info($id)
+    {
+         $count=Cart::where('user_id' ,$id)->count();
+         $data=Cart::where('user_id',$id)->get();
+         
+        //  join('food','carts.food_id','=','food.;id')->get();
+      
+         return view('cart_show',compact('count','data'));
+    }
+    public function user_cart_remove($id)
+    {
+         $data=Cart::find($id);
+         $data->delete();
+         return redirect()->back();
     }
 }
