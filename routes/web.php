@@ -38,6 +38,10 @@ Route::post('admin/chefs/update/{id}',[AdminController::class,'admin_chefs_updat
 Route::post('user/food/cart/{id}',[AdminController::class,'user_food_cart'])->name('user.food.cart');
 Route::get('user/cart/info/{id}',[AdminController::class,'user_cart_info'])->name('user.cart.info');
 Route::get('user/cart/remove/{id}',[AdminController::class,'user_cart_remove'])->name('user.cart.remove');
+Route::post('user/oreder/confirm',[AdminController::class,'user_order_confirm'])->name('user.order_confirm');
+Route::get('admin/oreder',[AdminController::class,'admin_order'])->name('admin.order');
+Route::get(md5('admin/search')  ,[AdminController::class,'admin_search'])->name('admin.search');
+ 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

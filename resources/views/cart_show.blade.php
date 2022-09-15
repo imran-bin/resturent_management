@@ -3,7 +3,7 @@
 
 <head>
     <base href="/public">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -141,17 +141,30 @@ https://templatemo.com/tm-558-klassy-cafe
                 </tr>
             </thead>
             <tbody>
+                <form action="{{route('user.order_confirm')}}" method="POST">
+                    @csrf
                 @foreach ($data as $key => $data)
                     <tr>
                         <td>{{ ++$key }}</td>
-                        <td>{{ $data->food->title }}</td>
+                        <td>
+                            <input type="text" name="foodname[]" id="" value=" {{ $data->food->title }}" hidden>
+                            {{ $data->food->title }}
+                        </td>
 
                        
-                        <td>{{ $data->quantity }}</td>
-                        <td>{{ $data->price }}</td>
+                        <td>
+                            <input type="text" name="quantity[]" id="" value="    {{ $data->quantity }}" hidden>
+                            {{ $data->quantity }}
+                        </td>
+                        <td>
+                            <input type="text" name="price[]" id="" value="    {{ $data->price }}" hidden>
+                            {{ $data->price }}
+                        </td>
+                        
 
-                        <td><a class="btn btn-sm btn-primary"
-                                href="{{ route('admin.chefs.edit', $data->id) }}">Edit</a> 
+                        <td>
+                            {{-- <a class="btn btn-sm btn-primary"
+                                href="{{ route('admin.chefs.edit', $data->id) }}">Edit</a>  --}}
                        <a class="btn btn-sm btn-danger" onclick="return confirm('Are you sure this chefs delete')"
                                 href="{{ route('user.cart.remove', $data->id) }}">Remove</a></td>
                     </tr>
@@ -161,7 +174,50 @@ https://templatemo.com/tm-558-klassy-cafe
             </tbody>
         </table>
     </div>
-  
+    <div align="center" >
+       <button      class="btn btn-primary text-danger" type="button" id="order">Order Now</button>
+    </div>
+
+     <div align="center" id="apear" style="display: none">
+        <div>
+            <label for="">Name</label>
+            <input type="text" name="name" id="" placeholder="name">
+        </div>
+        <div class="my-3">
+            <label for="">Phone</label>
+            <input type="number" name="phone" id="" placeholder="phone">
+        </div>
+        <div>
+            <label for="">Address</label>
+            <input type="text" name="address" id="" placeholder="address">
+        </div>
+        <div>
+            <input class="btn btn-sm btn-success mt-3 text-danger" type="submit" name="" id="" value="Order confirm">
+            <button class="btn btn-danger" type="button" id="close">Close</button>
+        </div>
+        <div>
+           
+        </div>
+
+     </div>
+    </form>
+       
+     <script>
+         $("#order").click(
+            function()
+            {
+                $("#apear").show();
+                $("#order").hide();
+            }
+         );
+         $("#close").click(function(){
+            $("#apear").hide();
+            $("#order").show();
+
+         });
+
+     </script>
+
 
     <!-- jQuery -->
     <script src="assets/js/jquery-2.1.0.min.js"></script>

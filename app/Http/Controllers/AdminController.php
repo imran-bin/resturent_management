@@ -5,10 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Chefs;
 use App\Models\Food;
+use App\Models\Order;
 use App\Models\Reservation;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
+use function PHPSTORM_META\type;
+
 class AdminController extends Controller
 {
     public function users( )
@@ -147,7 +152,8 @@ class AdminController extends Controller
             $cart->user_id=Auth::id();
             $cart->food_id=$id;
             $cart->quantity=$request->quantity;
-            $cart->price=$request->quantity * $food_price->price ;
+            $cart->price=$food_price->price ;
+            // $cart->price=$request->quantity * $food_price->price ;
        
             $cart->save();
             return redirect()->back();
@@ -171,5 +177,45 @@ class AdminController extends Controller
          $data=Cart::find($id);
          $data->delete();
          return redirect()->back();
+    }
+    public function user_order_confirm(Request $request)
+    {  
+     
+    //     $test=Cart::where('user_id',Auth::user()->id)->pluck('price')->sum();
+        
+ 
+        DB::table('carts')->where('user_id',Auth::user()->id)->delete();
+        
+     
+
+        foreach($request->foodname as $key=>$foodname)
+        {
+          
+        
+          $order= new Order;
+          $order->foodname=$foodname;
+          $order->price=$request->price[$key];
+          $order->quantity=$request->quantity[$key];
+          $order->name=$request->name;
+          $order->phone=$request->phone;
+          $order->address=$request->address;
+          $order->save();
+        
+        }
+      
+        return redirect()->back();
+    }
+    public function admin_order()
+    {
+        $order=Order::all();  
+        return view('Admin.admin_order',compact('order'));
+    }
+    public function admin_search(Request $request)
+    {
+        $searchtxt=$request->search;
+         
+        $order=Order::where('name','Like',"%{$searchtxt}%")->orWhere('foodname','Like','%'.$searchtxt.'%')->get();  
+      
+        return view('Admin.admin_order',compact('order'));
     }
 }
