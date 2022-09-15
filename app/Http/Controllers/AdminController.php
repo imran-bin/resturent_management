@@ -86,8 +86,15 @@ class AdminController extends Controller
     }
     public function admin_reservation(  )
     {
+       if(Auth::user()->usertype=='1')
+       {
         $reservations=Reservation::all();
         return view('Admin.admin_reservation',compact('reservations'));
+       }
+       else
+       {
+        return redirect('login');
+       }
     }
     public function admin_status($id)
     {
@@ -165,12 +172,21 @@ class AdminController extends Controller
     }
     public function user_cart_info($id)
     {
-         $count=Cart::where('user_id' ,$id)->count();
+        if(Auth::id()==$id)
+        {
+
+        
+        $count=Cart::where('user_id' ,$id)->count();
          $data=Cart::where('user_id',$id)->get();
          
         //  join('food','carts.food_id','=','food.;id')->get();
       
          return view('cart_show',compact('count','data'));
+        }
+        else
+        {
+            return redirect()->back();
+        }
     }
     public function user_cart_remove($id)
     {

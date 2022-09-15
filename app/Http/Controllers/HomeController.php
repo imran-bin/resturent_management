@@ -11,7 +11,11 @@ use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     public function index()
-    {
+    {   
+        if(Auth::id())
+        {
+            return redirect('redirect');
+        }
         $foods =Food ::all();
         $chefs=Chefs::all();
         $id=Auth::id();
