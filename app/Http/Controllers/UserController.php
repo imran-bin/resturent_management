@@ -37,7 +37,7 @@ class UserController extends Controller
         return redirect()->back();
         
     }
-    public function user_food_cart(Request $request,$id)
+    public function userFoodCart(Request $request,$id)
     {
         
         if(Auth::id())
@@ -58,7 +58,7 @@ class UserController extends Controller
             return redirect('login');
         }
     }
-    public function user_cart_index($id)
+    public function userCartIndex($id)
     {
         if(Auth::id()==$id)
         {
@@ -76,13 +76,13 @@ class UserController extends Controller
             return redirect()->back();
         }
     }
-    public function user_cart_destory($id)
+    public function userCartDestory($id)
     {
          $data=Cart::find($id);
          $data->delete();
          return redirect()->back();
     }
-    public function user_order_confirm(Request $request)
+    public function userOrderConfirm(Request $request)
     {  
      
     //     $test=Cart::where('user_id',Auth::user()->id)->pluck('price')->sum();

@@ -6,7 +6,7 @@
             <div class="card">
                 <div class="card-body">
                     <h1 class="text-center text-primary" >Food Update</h1>
-                    <form class="forms-sample" action="{{route('admin.food_update' ,$food->id)}}" method="POST" enctype="multipart/form-data" >
+                    <form class="forms-sample" action="{{route('admin.food.update' ,$food->id)}}" method="POST" enctype="multipart/form-data" >
                         @csrf
                         <div class="form-group">
                             <label for="exampleInputUsername1">Title</label>

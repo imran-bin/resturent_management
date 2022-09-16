@@ -6,7 +6,7 @@
             <div class="card">
                 <div class="card-body">
                     <h1 class="text-center text-primary">Chefs Upload</h1>
-                    <form class="forms-sample" action="{{ route('admin.chefs_update',$chefs->id) }}" method="POST"
+                    <form class="forms-sample" action="{{ route('admin.chefs.update',$chefs->id) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">

@@ -141,7 +141,7 @@ https://templatemo.com/tm-558-klassy-cafe
                 </tr>
             </thead>
             <tbody>
-                <form action="{{route('user.order_confirm')}}" method="POST">
+                <form action="{{route('user.order.confirm')}}" method="POST">
                     @csrf
                 @foreach ($data as $key => $data)
                     <tr>

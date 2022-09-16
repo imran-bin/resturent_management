@@ -62,7 +62,7 @@ class AdminController extends Controller
         return redirect()->back();
     }
    
-    public function admin_reservation()
+    public function adminReservation()
     {
        if(Auth::user()->usertype=='1')
        {
@@ -74,19 +74,19 @@ class AdminController extends Controller
         return redirect('login');
        }
     }
-    public function admin_status($id)
+    public function adminStatus($id)
     {
         $data=Reservation::find($id);
         $data->status='success';
         $data->save();
         return redirect()->back();
     }
-    public function admin_chefs_index( )
+    public function adminChefsIndex( )
     {
        $chefs=Chefs::all();
         return view('Admin.chefs_create',compact('chefs'));
     }
-    public function admin_chefs_store(Request $request)
+    public function adminChefsStore(Request $request)
     {
         $chefs=new Chefs;
         $image=$request->image;
@@ -99,19 +99,19 @@ class AdminController extends Controller
          return redirect()->back();
 
     }
-    public function admin_chefs_destory($id)
+    public function adminChefsDestory($id)
     {
        $chefs=Chefs::find($id);
        $chefs->delete();
        return redirect()->back();
     }
-    public function admin_chefs_edit($id)
+    public function adminChefsEdit($id)
     {
        $chefs=Chefs::find($id);
        
        return  view('Admin.chefs_edit',compact('chefs'));
     }
-    public function admin_chefs_update(Request $request,$id)
+    public function adminChefsUpdate(Request $request,$id)
     {
          $chefs=Chefs::find($id);
          $image=$request->image;
@@ -129,12 +129,12 @@ class AdminController extends Controller
     }
    
    
-    public function admin_order()
+    public function adminOrder()
     {
         $order=Order::all();  
         return view('Admin.admin_order',compact('order'));
     }
-    public function admin_search(Request $request)
+    public function adminSearch(Request $request)
     {
         $searchtxt=$request->search;
          

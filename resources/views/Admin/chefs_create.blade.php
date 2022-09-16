@@ -5,7 +5,7 @@
             <div class="card">
                 <div class="card-body">
                     <h1 class="text-center text-primary">Chefs Upload</h1>
-                    <form class="forms-sample" action="{{ route('admin.chefs_upload') }}" method="POST"
+                    <form class="forms-sample" action="{{ route('admin.chefs.store') }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
