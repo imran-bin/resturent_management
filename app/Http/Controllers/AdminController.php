@@ -16,23 +16,14 @@ use function PHPSTORM_META\type;
 
 class AdminController extends Controller
 {
-    public function users( )
-    {
-       $users=User::all();
-        return view('Admin.user',compact('users'));
-    }
-    public function users_delete($id)
-    {
-        $data=User::find($id);
-        $data->delete();
-        return redirect()->back();
-    }
-    public function food_create()
+   
+   
+    public function create()
     {
         $foods=Food::all();
         return view('Admin.food_menu',compact('foods'));
     }
-    public function food_store(Request $request)
+    public function store(Request $request)
     {
           $food=new Food;
           $image=$request->image;
@@ -45,19 +36,19 @@ class AdminController extends Controller
           $food->save();
           return redirect()->back();
     }
-    public function food_delete($id)
+    public function destory($id)
     {
         $food=Food::find($id);
         $food->delete();
         return redirect()->back();
     }
-    public function food_edit($id)
+    public function edit($id)
     {
          $food=Food::find($id);
          return view('Admin.food_edit',compact('food'));
 
     }
-    public function food_update(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $food=Food::find($id);
         $image=$request->image;
@@ -70,21 +61,8 @@ class AdminController extends Controller
         $food->save();
         return redirect()->back();
     }
-    public function user_reservation(Request $request)
-    {
-        $reservation= new Reservation;
-        $reservation->name=$request->name;
-        $reservation->phone=$request->phone;
-        $reservation->guest=$request->guest;
-        $reservation->email=$request->email;
-        $reservation->date=$request->date;
-        $reservation->time=$request->time;
-        $reservation->message=$request->message;
-        $reservation->save();
-        return redirect()->back();
-        
-    }
-    public function admin_reservation(  )
+   
+    public function admin_reservation()
     {
        if(Auth::user()->usertype=='1')
        {
@@ -103,12 +81,12 @@ class AdminController extends Controller
         $data->save();
         return redirect()->back();
     }
-    public function admin_chefs( )
+    public function admin_chefs_index( )
     {
        $chefs=Chefs::all();
         return view('Admin.chefs_create',compact('chefs'));
     }
-    public function admin_chefs_upload(Request $request)
+    public function admin_chefs_store(Request $request)
     {
         $chefs=new Chefs;
         $image=$request->image;
@@ -121,7 +99,7 @@ class AdminController extends Controller
          return redirect()->back();
 
     }
-    public function admin_chefs_delete($id)
+    public function admin_chefs_destory($id)
     {
        $chefs=Chefs::find($id);
        $chefs->delete();
@@ -149,78 +127,8 @@ class AdminController extends Controller
          $chefs->save();
          return redirect()->route('admin.chefs');
     }
-    public function user_food_cart(Request $request,$id)
-    {
-        
-        if(Auth::id())
-        {
-            $cart=new Cart;
-            $food_price=Food::find($id);
-            $cart->user_id=Auth::id();
-            $cart->food_id=$id;
-            $cart->quantity=$request->quantity;
-            $cart->price=$food_price->price ;
-            // $cart->price=$request->quantity * $food_price->price ;
-       
-            $cart->save();
-            return redirect()->back();
-        }
-        else
-        {
-            return redirect('login');
-        }
-    }
-    public function user_cart_info($id)
-    {
-        if(Auth::id()==$id)
-        {
-
-        
-        $count=Cart::where('user_id' ,$id)->count();
-         $data=Cart::where('user_id',$id)->get();
-         
-        //  join('food','carts.food_id','=','food.;id')->get();
-      
-         return view('cart_show',compact('count','data'));
-        }
-        else
-        {
-            return redirect()->back();
-        }
-    }
-    public function user_cart_remove($id)
-    {
-         $data=Cart::find($id);
-         $data->delete();
-         return redirect()->back();
-    }
-    public function user_order_confirm(Request $request)
-    {  
-     
-    //     $test=Cart::where('user_id',Auth::user()->id)->pluck('price')->sum();
-        
- 
-        DB::table('carts')->where('user_id',Auth::user()->id)->delete();
-        
-     
-
-        foreach($request->foodname as $key=>$foodname)
-        {
-          
-        
-          $order= new Order;
-          $order->foodname=$foodname;
-          $order->price=$request->price[$key];
-          $order->quantity=$request->quantity[$key];
-          $order->name=$request->name;
-          $order->phone=$request->phone;
-          $order->address=$request->address;
-          $order->save();
-        
-        }
-      
-        return redirect()->back();
-    }
+   
+   
     public function admin_order()
     {
         $order=Order::all();  
