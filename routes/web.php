@@ -33,7 +33,7 @@ Route::prefix('users')->group(function () {
 Route::prefix('admin')->group(function () {
     Route::get('/food/create', [AdminController::class, 'create'])->name('admin.food_create');
     Route::post('/food/store', [AdminController::class, 'store'])->name('admin.food_upload');
-    Route::get('/food/delete/{id}', [AdminController::class, 'delete'])->name('admin.food.delete');
+    Route::get('/food/delete/{id}', [AdminController::class, 'destory'])->name('admin.food.delete');
     Route::get('/food/edit/{id}', [AdminController::class, 'edit'])->name('admin.food.edit');
     Route::post('/food/update/{id}', [AdminController::class, 'update'])->name('admin.food_update');
     Route::get('/reservation', [AdminController::class, 'admin_reservation'])->name('admin.reservation');
