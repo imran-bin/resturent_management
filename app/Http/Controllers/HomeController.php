@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Chefs;
 use App\Models\Food;
- 
+use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -35,6 +35,11 @@ class HomeController extends Controller
         }
         else
         {
+            
+
+
+
+ 
             $id=Auth::id();
             $count=Cart::where('user_id',$id)->count();
             return view('home',compact('foods','chefs','count')); 

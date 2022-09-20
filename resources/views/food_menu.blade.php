@@ -33,6 +33,15 @@
             </form>
                     
                 @endforeach
+                {{-- <script>
+                    @if(Session::has('success'))
+                    //   toastr.option{
+                    //     "closeButton":true,
+                    //     "progressBar":true,
+                    //   }
+                       toastr.warning("{{session('success')}}")
+                    @endif
+                </script> --}}
                  
             </div>
         </div>

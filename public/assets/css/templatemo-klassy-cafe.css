@@ -208,7 +208,7 @@ header
 */
 
 .background-header {
-  background-color: #fff;
+  background-color:  gray;
   height: 80px!important;
   position: fixed!important;
   top: 0px;

@@ -9,7 +9,11 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
 use App\Models\Food;
 use App\Models\Order;
+ 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use RealRashid\SweetAlert\Facades\Alert;
+
 class UserController extends Controller
 {
     public function index()
@@ -25,6 +29,19 @@ class UserController extends Controller
     }
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'phone' => 'required',
+            'guest' => 'required',
+            'email' => 'required',
+            'date' => 'required',
+            'time' => 'required',
+            'message' => 'required',
+            
+        ]);
+        if ($validator->fails()) {
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+        }
         $reservation= new Reservation;
         $reservation->name=$request->name;
         $reservation->phone=$request->phone;
@@ -34,14 +51,23 @@ class UserController extends Controller
         $reservation->time=$request->time;
         $reservation->message=$request->message;
         $reservation->save();
-        return redirect()->back();
+         
+        return redirect()->back()->withToastSuccess('Reservation   Successfully!');
         
     }
     public function userFoodCart(Request $request,$id)
     {
+        $validator = Validator::make($request->all(), [
+            'quantity' => 'required',
+            
+        ]);
         
         if(Auth::id())
         {
+            if ($validator->fails()) {
+                return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+            }
+           
             $cart=new Cart;
             $food_price=Food::find($id);
             $cart->user_id=Auth::id();
@@ -51,11 +77,13 @@ class UserController extends Controller
             // $cart->price=$request->quantity * $food_price->price ;
        
             $cart->save();
-            return redirect()->back();
+             
+            return redirect()->back()->withToastSuccess('food Cart Successfully!');
         }
         else
         {
-            return redirect('login');
+             
+            return redirect('login') ;
         }
     }
     public function userCartIndex($id)

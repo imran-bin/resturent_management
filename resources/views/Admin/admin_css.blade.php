@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="backend/assets/vendors/mdi/css/materialdesignicons.min.css">
 <link rel="stylesheet" href="backend/assets/vendors/css/vendor.bundle.base.css">
 <!-- endinject -->
+<link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
 <!-- Plugin css for this page -->
 <link rel="stylesheet" href="backend/assets/vendors/jvectormap/jquery-jvectormap.css">
 <link rel="stylesheet" href="backend/assets/vendors/flag-icon-css/css/flag-icon.min.css">

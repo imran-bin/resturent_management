@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cart;
+use App\Exceptions\ChefsNotFound;
+use App\Exceptions\ProductNotFound;
+use App\Exceptions\UserNotFound;
 use App\Models\Chefs;
 use App\Models\Food;
 use App\Models\Order;
 use App\Models\Reservation;
-use App\Models\User;
-use Illuminate\Support\Facades\DB;
+ 
+use RealRashid\SweetAlert\Toaster;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
-use function PHPSTORM_META\type;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
@@ -26,6 +28,17 @@ class AdminController extends Controller
     public function store(Request $request)
     {
           $food=new Food;
+          $validator = Validator::make($request->all(), [
+            'image' => 'required',
+            'title' => 'required',
+            'price' => 'required',
+            'description' => 'required',
+         
+            
+        ]);
+        if ($validator->fails()) {
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+        }
           $image=$request->image;
           $imageName=time() .'.'.$image->getClientOriginalExtension();
           $request->image->move('foodImage' ,$imageName);
@@ -34,7 +47,8 @@ class AdminController extends Controller
           $food->price=$request->price;
           $food->description=$request->description;
           $food->save();
-          return redirect()->back();
+  
+          return redirect()->back()->withToastSuccess('food Added Successfully!');
     }
     public function destory($id)
     {
@@ -50,7 +64,9 @@ class AdminController extends Controller
     }
     public function update(Request $request, $id)
     {
-        $food=Food::find($id);
+       try
+       {
+        $food=Food::findOrFail($id);
         $image=$request->image;
         $imageName=time() .'.'.$image->getClientOriginalExtension();
         $request->image->move('foodImage' ,$imageName);
@@ -59,6 +75,12 @@ class AdminController extends Controller
         $food->price=$request->price;
         $food->description=$request->description;
         $food->save();
+       }
+       catch(Exception $exception)
+       {
+         throw new ProductNotFound();
+       }
+       
         return redirect()->back();
     }
    
@@ -88,6 +110,15 @@ class AdminController extends Controller
     }
     public function adminChefsStore(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'image' => 'required',
+            'name' => 'required',
+            'specialsity' => 'required',
+            
+        ]);
+        if ($validator->fails()) {
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+        }
         $chefs=new Chefs;
         $image=$request->image;
          $imageName=time().'.'.$image->getClientOriginalExtension();
@@ -96,7 +127,7 @@ class AdminController extends Controller
          $chefs->specialsity=$request->special;
          $chefs->image=$imageName;
          $chefs->save();
-         return redirect()->back();
+         return redirect()->back()->withToastSuccess('Chefs Added Successfully!');
 
     }
     public function adminChefsDestory($id)
@@ -107,24 +138,47 @@ class AdminController extends Controller
     }
     public function adminChefsEdit($id)
     {
-       $chefs=Chefs::find($id);
+       try{
+        $chefs=Chefs::findOrFail($id);
+       }
+       catch(Exception $exception){
+        throw new ChefsNotFound();
+
+       }
        
        return  view('Admin.chefs_edit',compact('chefs'));
     }
     public function adminChefsUpdate(Request $request,$id)
-    {
-         $chefs=Chefs::find($id);
-         $image=$request->image;
-         if($image)
-         {
-            $imageName=time().'.'.$image->getClientOriginalExtension();
-            $request->image->move('chefsImage',$imageName);
-            $chefs->image=$imageName;
-         }
+    {   
+        $validator = Validator::make($request->all(), [
+            'image' => 'required',
+            'name' => 'required',
+            'specialsity' => 'required',
+            
+        ]);
+        if ($validator->fails()) {
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+        }
+        try{
+            $chefs=Chefs::findOrFail($id);
+            $image=$request->image;
+            if($image)
+            {
+               $imageName=time().'.'.$image->getClientOriginalExtension();
+               $request->image->move('chefsImage',$imageName);
+               $chefs->image=$imageName;
+            }
+           
+            $chefs->specialsity=$request->special;
+            $chefs->name=$request->name;
+            $chefs->save();
+           }
+           catch(Exception $exception){
+            throw new ChefsNotFound();
+    
+           } 
+       
         
-         $chefs->specialsity=$request->special;
-         $chefs->name=$request->name;
-         $chefs->save();
          return redirect()->route('admin.chefs');
     }
    
@@ -138,8 +192,14 @@ class AdminController extends Controller
     {
         $searchtxt=$request->search;
          
-        $order=Order::where('name','Like',"%{$searchtxt}%")->orWhere('foodname','Like','%'.$searchtxt.'%')->get();  
-      
+        
+         try{
+            $order=Order::where('name','Like',"%{$searchtxt}%")->orWhere('foodname','Like','%'.$searchtxt.'%')->get(); 
+         }
+         catch(Exception $exception)
+         {
+            throw new UserNotFound();
+         }
         return view('Admin.admin_order',compact('order'));
     }
 }
