@@ -12,7 +12,7 @@ use App\Models\Order;
  
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use RealRashid\SweetAlert\Facades\Alert;
+ 
 
 class UserController extends Controller
 {
@@ -25,7 +25,7 @@ class UserController extends Controller
     {
         $data=User::find($id);
         $data->delete();
-        return redirect()->back();
+        return redirect()->back()->with('success','User Delete Successfullay !');
     }
     public function store(Request $request)
     {
@@ -40,7 +40,7 @@ class UserController extends Controller
             
         ]);
         if ($validator->fails()) {
-            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+            return back()->with('error', $validator->messages()->all()[0])->withInput();
         }
         $reservation= new Reservation;
         $reservation->name=$request->name;
@@ -50,9 +50,12 @@ class UserController extends Controller
         $reservation->date=$request->date;
         $reservation->time=$request->time;
         $reservation->message=$request->message;
-        $reservation->save();
-         
-        return redirect()->back()->withToastSuccess('Reservation   Successfully!');
+        
+         if($reservation->save())
+         {
+            return redirect()->back()->with('success','Reservation   Successfully!');
+         }
+        return redirect()->back()->with('error','Reservation   booking failed!');
         
     }
     public function userFoodCart(Request $request,$id)
@@ -65,7 +68,7 @@ class UserController extends Controller
         if(Auth::id())
         {
             if ($validator->fails()) {
-                return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+                return back()->with('error', $validator->messages()->all()[0])->withInput();
             }
            
             $cart=new Cart;
@@ -75,10 +78,12 @@ class UserController extends Controller
             $cart->quantity=$request->quantity;
             $cart->price=$food_price->price ;
             // $cart->price=$request->quantity * $food_price->price ;
-       
-            $cart->save();
+            if( $cart->save())
+            {
+                return redirect()->back()->with('success','food Cart Successfully!');
+            }
              
-            return redirect()->back()->withToastSuccess('food Cart Successfully!');
+            return redirect()->back()->with('error','food Cart failed!');
         }
         else
         {
@@ -108,7 +113,7 @@ class UserController extends Controller
     {
          $data=Cart::find($id);
          $data->delete();
-         return redirect()->back();
+         return redirect()->back()->with('success','Cart Data Remove Successfullay!');
     }
     public function userOrderConfirm(Request $request)
     {  
@@ -131,10 +136,12 @@ class UserController extends Controller
           $order->name=$request->name;
           $order->phone=$request->phone;
           $order->address=$request->address;
-          $order->save();
+         if( $order->save()){
+            return redirect()->back()->with('success','order  Successfully!');
+         }
         
         }
       
-        return redirect()->back();
+        return redirect()->back()->with('success','order   failed!');
     }
 }

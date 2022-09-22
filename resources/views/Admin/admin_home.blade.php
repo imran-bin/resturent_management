@@ -27,6 +27,6 @@
     <!-- plugins:js -->
     @include('Admin.admin_script')
     <!-- End custom js for this page -->
-    @include('sweetalert::alert')
+    {{-- @include('sweetalert::alert') --}}
   </body>
 </html>

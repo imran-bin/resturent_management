@@ -9,9 +9,8 @@
             </div>
         </div>
         <div class="row">
-            @foreach ($chefs as $chefs)
+            @forelse ($chefs as $chefs)
                 
-           
             <div class="col-lg-4">
                 <div class="chef-item">
                     <div class="thumb">
@@ -29,7 +28,13 @@
                     </div>
                 </div>
             </div>
-            @endforeach
+            @empty
+                <h1 class="text-center">Empty Chefs</h1>
+            @endforelse
+           
+                
+           
+            
              
         </div>
     </div>

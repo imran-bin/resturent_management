@@ -141,9 +141,21 @@ https://templatemo.com/tm-558-klassy-cafe
                 </tr>
             </thead>
             <tbody>
+                @if (Session::has('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                     <strong>{{session('success')}}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                @endif
+                @if (Session::has('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                     <strong>{{session('error')}}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                @endif
                 <form action="{{route('user.order.confirm')}}" method="POST">
                     @csrf
-                @foreach ($data as $key => $data)
+                    @forelse ($data as $key => $data)
                     <tr>
                         <td>{{ ++$key }}</td>
                         <td>
@@ -168,38 +180,42 @@ https://templatemo.com/tm-558-klassy-cafe
                        <a class="btn btn-sm btn-danger" onclick="return confirm('Are you sure this chefs delete')"
                                 href="{{ route('user.cart.remove', $data->id) }}">Remove</a></td>
                     </tr>
-                @endforeach
-
+                    <div align="center" >
+                        <button      class="btn btn-primary text-danger" type="button" id="order">Order Now</button>
+                     </div>
+                 
+                      <div align="center" id="apear" style="display: none">
+                         <div>
+                             <label for="">Name</label>
+                             <input type="text" name="name" id="" placeholder="name">
+                         </div>
+                         <div class="my-3">
+                             <label for="">Phone</label>
+                             <input type="number" name="phone" id="" placeholder="phone">
+                         </div>
+                         <div>
+                             <label for="">Address</label>
+                             <input type="text" name="address" id="" placeholder="address">
+                         </div>
+                         <div>
+                             <input class="btn btn-sm btn-success mt-3 text-danger" type="submit" name="" id="" value="Order confirm">
+                             <button class="btn btn-danger" type="button" id="close">Close</button>
+                         </div>
+                         <div>
+                            
+                         </div>
+                 
+                      </div>
+                    @empty
+                    <h1>No Data Found</h1>
+                        
+                    @endforelse
+               
 
             </tbody>
         </table>
     </div>
-    <div align="center" >
-       <button      class="btn btn-primary text-danger" type="button" id="order">Order Now</button>
-    </div>
-
-     <div align="center" id="apear" style="display: none">
-        <div>
-            <label for="">Name</label>
-            <input type="text" name="name" id="" placeholder="name">
-        </div>
-        <div class="my-3">
-            <label for="">Phone</label>
-            <input type="number" name="phone" id="" placeholder="phone">
-        </div>
-        <div>
-            <label for="">Address</label>
-            <input type="text" name="address" id="" placeholder="address">
-        </div>
-        <div>
-            <input class="btn btn-sm btn-success mt-3 text-danger" type="submit" name="" id="" value="Order confirm">
-            <button class="btn btn-danger" type="button" id="close">Close</button>
-        </div>
-        <div>
-           
-        </div>
-
-     </div>
+   
     </form>
        
      <script>

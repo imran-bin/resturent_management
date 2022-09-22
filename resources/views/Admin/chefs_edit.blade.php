@@ -6,6 +6,18 @@
             <div class="card">
                 <div class="card-body">
                     <h1 class="text-center text-primary">Chefs Upload</h1>
+                    @if (Session::has('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>{{ session('success') }}</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                    @if (Session::has('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>{{ session('error') }}</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
                     <form class="forms-sample" action="{{ route('admin.chefs.update',$chefs->id) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
@@ -15,7 +27,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Specialsity</label>
-                            <input type="text" name="special" value="{{$chefs->specialsity}}" class="form-control text-white" placeholder="Specialsity">
+                            <input type="text" name="specialsity" value="{{$chefs->specialsity}}" class="form-control text-white" placeholder="Specialsity">
                         </div>
                            <div>
                             <p>old image</p>

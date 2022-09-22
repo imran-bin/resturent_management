@@ -28,6 +28,7 @@
                     </div>
                 </div>
             </div>
+           
             <div class="col-lg-6">
                 <div class="contact-form">
                     <form id="contact" action="{{ route('user.reservation') }}" method="post">
@@ -35,28 +36,40 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <h4>Table Reservation</h4>
+                                @if (Session::has('success'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                     <strong>{{session('success')}}</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                  </div>
+                                @endif
+                                @if (Session::has('error'))
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                     <strong>{{session('error')}}</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                  </div>
+                                @endif
                             </div>
                             <div class="col-lg-6 col-sm-12">
                                 <fieldset>
                                     <input name="name" type="text" id="name" placeholder="Your Name*"
-                                        required="">
+                                         >
                                 </fieldset>
                             </div>
                             <div class="col-lg-6 col-sm-12">
                                 <fieldset>
                                     <input name="email" type="email" id="email" placeholder="Your Email Address"
-                                        required="">
+                                         >
                                 </fieldset>
                             </div>
                             <div class="col-lg-6 col-sm-12">
                                 <fieldset>
                                     <input name="phone" type="number" id="phone" placeholder="Phone Number*"
-                                        required="">
+                                        >
                                 </fieldset>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <fieldset>
-                                    <input name="guest" type="number" placeholder="guest Number*" required="">
+                                    <input name="guest" type="number" placeholder="guest Number*"  >
                                 </fieldset>
                             </div>
                             <div class="col-lg-6">
@@ -91,7 +104,5 @@
             </div>
         </div>
     </div>
-    <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-    <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
-    {!! Toastr::message() !!}
+ 
 </section>

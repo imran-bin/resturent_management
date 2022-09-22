@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Chefs extends Model
 {
     use HasFactory;
-    protected $fillable = [
+    protected $fillable=[
         'name',
-        'specialsity',
         'image',
+        'specialsity',
     ];
 }

@@ -5,6 +5,20 @@
             <div class="card">
                 <div class="card-body">
                     <h1 class="text-center text-primary">Food Upload</h1>
+                    
+                   
+                    @if (Session::has('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                         <strong>{{session('success')}}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                      </div>
+                    @endif
+                    @if (Session::has('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                         <strong>{{session('error')}}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                      </div>
+                    @endif
                     <form class="forms-sample" action="{{ route('admin.food.store') }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
@@ -49,18 +63,21 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($foods as $key => $food)
-                    <tr>
-                        <td>{{ ++$key }}</td>
-                        <td>{{ $food->title }}</td>
-                        <td>{{ $food->price }} </td>
-                        <td> <img src="foodImage/{{ $food->image }}" alt=""> </td>
-                        <td>{{ $food->description }}</td>
-                        <td><a class="btn btn-sm btn-primary" href="{{ route('admin.food.edit', $food->id) }}">Edit</a></td>
-                        <td><a class="btn btn-sm btn-danger" onclick="return confirm('Are you sure this Food delete')"
-                                href="{{ route('admin.food.delete', $food->id) }}">Delete</a></td>
-                    </tr>
-                @endforeach
+                @forelse ($foods as $key => $food)
+                <tr>
+                    <td>{{ ++$key }}</td>
+                    <td>{{ $food->title }}</td>
+                    <td>{{ $food->price }} </td>
+                    <td> <img src="foodImage/{{ $food->image }}" alt=""> </td>
+                    <td>{{ $food->description }}</td>
+                    <td><a class="btn btn-sm btn-primary" href="{{ route('admin.food.edit', $food->id) }}">Edit</a></td>
+                    <td><a class="btn btn-sm btn-danger" onclick="return confirm('Are you sure this Food delete')"
+                            href="{{ route('admin.food.delete', $food->id) }}">Delete</a></td>
+                </tr>
+                @empty
+                    <h1>Empty food</h1>
+                @endforelse
+               
 
 
             </tbody>

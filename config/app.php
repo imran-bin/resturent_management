@@ -186,7 +186,7 @@ return [
          * Package Service Providers...
          */
         // Brian2694\Toastr\ToastrServiceProvider::class,
-        RealRashid\SweetAlert\SweetAlertServiceProvider::class,
+        // RealRashid\SweetAlert\SweetAlertServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -215,7 +215,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         // 'Toastr'  => Brian2694\Toastr\Facades\Toastr::class,
-        'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
+        // 'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
 
     ])->toArray(),
 

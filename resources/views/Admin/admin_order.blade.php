@@ -24,24 +24,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($order as $key => $order)
-                        <tr>
-                            <td>{{ ++$key }}</td>
-                            <td>{{ $order->name }}</td>
-                            <td>{{ $order->phone }}</td>
-                            <td>{{ $order->address }}</td>
-                            <td>{{ $order->foodname }}</td>
-                            <td>{{ $order->price }}</td>
-                            <td>{{ $order->quantity }}</td>
-                            <td>{{ $order->quantity * $order->price }}</td>
+                    @forelse ($order as $key => $order)
+                    <tr>
+                        <td>{{ ++$key }}</td>
+                        <td>{{ $order->name }}</td>
+                        <td>{{ $order->phone }}</td>
+                        <td>{{ $order->address }}</td>
+                        <td>{{ $order->foodname }}</td>
+                        <td>{{ $order->price }}</td>
+                        <td>{{ $order->quantity }}</td>
+                        <td>{{ $order->quantity * $order->price }}</td>
 
 
-                            {{-- <td><a class="btn btn-sm btn-primary" href="{{ route('admin.food.edit', $order->id) }}">Edit</a>
-                            </td>
-                            <td><a class="btn btn-sm btn-danger" onclick="return confirm('Are you sure this Food delete')"
-                                    href="{{ route('admin.food.delete', $order->id) }}">Delete</a></td> --}}
-                        </tr>
-                    @endforeach
+                        {{-- <td><a class="btn btn-sm btn-primary" href="{{ route('admin.food.edit', $order->id) }}">Edit</a>
+                        </td>
+                        <td><a class="btn btn-sm btn-danger" onclick="return confirm('Are you sure this Food delete')"
+                                href="{{ route('admin.food.delete', $order->id) }}">Delete</a></td> --}}
+                    </tr>
+                    @empty
+                    <h1>Oreder Empty</h1>
+                        
+                    @endforelse
+                  
 
 
                 </tbody>

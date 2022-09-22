@@ -12,7 +12,7 @@
     <div class="menu-item-carousel">
         <div class="col-lg-12">
             <div class="owl-menu-item owl-carousel">
-                @foreach ($foods as $food)
+                @forelse ($foods as $food)
                 <form action="{{route('user.food.cart',$food->id)}}" method="POST">
                     @csrf
                 <div class="item">
@@ -31,17 +31,11 @@
                 </div>
                
             </form>
-                    
-                @endforeach
-                {{-- <script>
-                    @if(Session::has('success'))
-                    //   toastr.option{
-                    //     "closeButton":true,
-                    //     "progressBar":true,
-                    //   }
-                       toastr.warning("{{session('success')}}")
-                    @endif
-                </script> --}}
+                @empty
+                    <h1>Empty Food</h1>
+                @endforelse
+                
+               
                  
             </div>
         </div>
