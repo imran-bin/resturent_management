@@ -24,8 +24,21 @@ class UserController extends Controller
     public function destory($id)
     {
         $data=User::find($id);
-        $data->delete();
+        if(!empty($data))
+       {
+       
+       if( $data->delete())
+       {
         return redirect()->back()->with('success','User Delete Successfullay !');
+       }
+       else{
+        return redirect()->back()->with('error','User Delete Failed !');
+       }
+        
+       }
+       else{
+        return    abort(404, 'Data Not Found.');
+       }
     }
     public function store(Request $request)
     {
@@ -51,12 +64,17 @@ class UserController extends Controller
         $reservation->time=$request->time;
         $reservation->message=$request->message;
         
-         if($reservation->save())
+         if(Auth::id())
+         {
+            if($reservation->save())
          {
             return redirect()->back()->with('success','Reservation   Successfully!');
          }
         return redirect()->back()->with('error','Reservation   booking failed!');
-        
+         }
+        else{
+            return redirect('/login');
+        }
     }
     public function userFoodCart(Request $request,$id)
     {
@@ -112,8 +130,21 @@ class UserController extends Controller
     public function userCartDestory($id)
     {
          $data=Cart::find($id);
-         $data->delete();
-         return redirect()->back()->with('success','Cart Data Remove Successfullay!');
+         if(!empty($data))
+         {
+            if( $data->delete())
+            {
+                return redirect()->back()->with('success','Cart Data Remove Successfullay!');
+            }
+            else{
+                return redirect()->back()->with('error','Cart Data Remove Failed!');
+            }
+         }
+         else{
+            return    abort(404, 'Data Not Found.');
+         }
+        
+         
     }
     public function userOrderConfirm(Request $request)
     {  
@@ -142,6 +173,6 @@ class UserController extends Controller
         
         }
       
-        return redirect()->back()->with('success','order   failed!');
+        return redirect()->back()->with('error','orderd   failed!');
     }
 }

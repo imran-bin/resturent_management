@@ -25,7 +25,7 @@
           <th>email</th>
           <th>Message</th>
           <th>Status</th>
-          <th>Action</th>
+          {{-- <th>Action</th> --}}
         </tr>
       </thead>
       <tbody>
@@ -48,7 +48,7 @@
           
           
        
-         <td><a class="btn btn-sm btn-danger" onclick="return confirm('Are you sure this Food delete')" href="{{route('admin.food.delete',$reservation->id)}}">Delete</a></td>
+         {{-- <td><a class="btn btn-sm btn-danger" onclick="return confirm('Are you sure this Food delete')" href="{{route('admin..delete',$reservation->id)}}">Delete</a></td> --}}
         </tr>  
         @empty
             <h1>Empty Reservation</h1>

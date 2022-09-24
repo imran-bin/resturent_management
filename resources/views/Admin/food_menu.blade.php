@@ -71,7 +71,7 @@
                     <td> <img src="foodImage/{{ $food->image }}" alt=""> </td>
                     <td>{{ $food->description }}</td>
                     <td><a class="btn btn-sm btn-primary" href="{{ route('admin.food.edit', $food->id) }}">Edit</a></td>
-                    <td><a class="btn btn-sm btn-danger" onclick="return confirm('Are you sure this Food delete')"
+                    <td><a class="btn btn-sm btn-danger"  
                             href="{{ route('admin.food.delete', $food->id) }}">Delete</a></td>
                 </tr>
                 @empty

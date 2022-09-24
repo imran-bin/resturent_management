@@ -177,9 +177,15 @@ https://templatemo.com/tm-558-klassy-cafe
                         <td>
                             {{-- <a class="btn btn-sm btn-primary"
                                 href="{{ route('admin.chefs.edit', $data->id) }}">Edit</a>  --}}
-                       <a class="btn btn-sm btn-danger" onclick="return confirm('Are you sure this chefs delete')"
+                       <a class="btn btn-sm btn-danger"   
                                 href="{{ route('user.cart.remove', $data->id) }}">Remove</a></td>
                     </tr>
+                   
+                    @empty
+                    <h1>No Data Found</h1>
+                        
+                    @endforelse
+               
                     <div align="center" >
                         <button      class="btn btn-primary text-danger" type="button" id="order">Order Now</button>
                      </div>
@@ -206,12 +212,6 @@ https://templatemo.com/tm-558-klassy-cafe
                          </div>
                  
                       </div>
-                    @empty
-                    <h1>No Data Found</h1>
-                        
-                    @endforelse
-               
-
             </tbody>
         </table>
     </div>

@@ -63,7 +63,7 @@
                         <td> <img src="chefsImage/{{ $chefs->image }}" alt=""> </td>
                   
                         <td><a class="btn btn-sm btn-primary" href="{{ route('admin.chefs.edit', $chefs->id) }}">Edit</a></td>
-                        <td><a class="btn btn-sm btn-danger" onclick="return confirm('Are you sure this chefs delete')"
+                        <td><a class="btn btn-sm btn-danger"  
                                 href="{{ route('admin.chefs.delete', $chefs->id) }}">Delete</a></td>
                     </tr>
                 @endforeach
