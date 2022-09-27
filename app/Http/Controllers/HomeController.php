@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Chefs;
 use App\Models\Food;
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller

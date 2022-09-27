@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ReservationValidation;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Reservation;
@@ -23,38 +24,15 @@ class UserController extends Controller
     }
     public function destory($id)
     {
-        $data=User::find($id);
-        if(!empty($data))
-       {
-       
-       if( $data->delete())
-       {
-        return redirect()->back()->with('success','User Delete Successfullay !');
-       }
-       else{
-        return redirect()->back()->with('error','User Delete Failed !');
-       }
         
-       }
-       else{
-        return    abort(404, 'Data Not Found.');
-       }
+        return (User::findOrFail($id))->delete()
+        ? redirect()->back()->with('success','User Delete Successfullay !')
+        : redirect()->back()->with('error','User Delete Failed !');
+   
     }
-    public function store(Request $request)
+    public function store(ReservationValidation $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'phone' => 'required',
-            'guest' => 'required',
-            'email' => 'required',
-            'date' => 'required',
-            'time' => 'required',
-            'message' => 'required',
-            
-        ]);
-        if ($validator->fails()) {
-            return back()->with('error', $validator->messages()->all()[0])->withInput();
-        }
+         
         $reservation= new Reservation;
         $reservation->name=$request->name;
         $reservation->phone=$request->phone;
@@ -66,11 +44,9 @@ class UserController extends Controller
         
          if(Auth::id())
          {
-            if($reservation->save())
-         {
-            return redirect()->back()->with('success','Reservation   Successfully!');
-         }
-        return redirect()->back()->with('error','Reservation   booking failed!');
+            return($reservation->save())
+            ? redirect()->back()->with('success','Reservation   Successfully!')
+            : redirect()->back()->with('error','Reservation   booking failed!');
          }
         else{
             return redirect('/login');
@@ -95,13 +71,10 @@ class UserController extends Controller
             $cart->food_id=$id;
             $cart->quantity=$request->quantity;
             $cart->price=$food_price->price ;
-            // $cart->price=$request->quantity * $food_price->price ;
-            if( $cart->save())
-            {
-                return redirect()->back()->with('success','food Cart Successfully!');
-            }
-             
-            return redirect()->back()->with('error','food Cart failed!');
+            return ($cart->save())
+            ? redirect()->back()->with('success','food Cart Successfully!')
+            : redirect()->back()->with('error','food Cart failed!');
+            
         }
         else
         {
@@ -113,8 +86,6 @@ class UserController extends Controller
     {
         if(Auth::id()==$id)
         {
-
-        
         $count=Cart::where('user_id' ,$id)->count();
          $data=Cart::where('user_id',$id)->get();
          
@@ -129,20 +100,12 @@ class UserController extends Controller
     }
     public function userCartDestory($id)
     {
-         $data=Cart::find($id);
-         if(!empty($data))
-         {
-            if( $data->delete())
-            {
-                return redirect()->back()->with('success','Cart Data Remove Successfullay!');
-            }
-            else{
-                return redirect()->back()->with('error','Cart Data Remove Failed!');
-            }
-         }
-         else{
-            return    abort(404, 'Data Not Found.');
-         }
+         
+         return(Cart::find($id))->delete()
+         ? redirect()->back()->with('success','Cart Data Remove Successfullay!')
+         : redirect()->back()->with('error','Cart Data Remove Failed!');
+
+          
         
          
     }

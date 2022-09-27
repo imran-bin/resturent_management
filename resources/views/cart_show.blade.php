@@ -186,11 +186,11 @@ https://templatemo.com/tm-558-klassy-cafe
                         
                     @endforelse
                
-                    <div align="center" >
+                    <div align="center " >
                         <button      class="btn btn-primary text-danger" type="button" id="order">Order Now</button>
                      </div>
                  
-                      <div align="center" id="apear" style="display: none">
+                      <div align="center " id="apear" style="display: none">
                          <div>
                              <label for="">Name</label>
                              <input type="text" name="name" id="" placeholder="name">
