@@ -83,16 +83,20 @@ class AdminController extends Controller
     }
     public function adminStatus($id)
     {
-        $data = Reservation::find($id);
-        if (!empty($data)) {
-            $data->status = 'success';
-            if ($data->save()) {
-                return redirect()->back()->with('success', 'status success');
-            }
-            return redirect()->back()->with('error', 'status faield');
-        } else {
-            return    abort(404, 'Data Not Found.');
-        }
+         $data = Reservation::find($id);
+
+        return($data)
+        ?  $data->status = 'success'
+        : redirect()->back()->with('error', 'status faield');
+        // if (!empty($data)) {
+        //     $data->status = 'success';
+        //     if ($data->save()) {
+        //         return redirect()->back()->with('success', 'status success');
+        //     }
+        //     return redirect()->back()->with('error', 'status faield');
+        // } else {
+        //     return    abort(404, 'Data Not Found.');
+        // }
     }
 
 

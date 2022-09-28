@@ -37,42 +37,26 @@ https://templatemo.com/tm-558-klassy-cafe
 <body>
 
     <!-- ***** Preloader Start ***** -->
-    <div id="preloader">
-        <div class="jumper">
-            <div></div>
-            <div></div>
-            <div></div>
-        </div>
-    </div>
+
     <!-- ***** Preloader End ***** -->
 
 
     <!-- ***** Header Area Start ***** -->
-    <header class="header-area header-sticky">
+    <header class="header-area header-sticky ">
         <div class="container">
             <div class="row">
                 <div class="col-12">
                     <nav class="main-nav">
-                        <!-- ***** Logo Start ***** -->
+
                         <a href="index.html" class="logo">
                             <img src="assets/images/klassy-logo.png" align="klassy cafe html template">
                         </a>
-                        <!-- ***** Logo End ***** -->
-                        <!-- ***** Menu Start ***** -->
+
                         <ul class="nav">
                             <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
                             <li class="scroll-to-section"><a href="#about">About</a></li>
 
-                            <!--
-                            <li class="submenu">
-                                <a href="javascript:;">Drop Down</a>
-                                <ul>
-                                    <li><a href="#">Drop Down Page 1</a></li>
-                                    <li><a href="#">Drop Down Page 2</a></li>
-                                    <li><a href="#">Drop Down Page 3</a></li>
-                                </ul>
-                            </li>
-                        -->
+
                             <li class="scroll-to-section"><a href="#menu">Menu</a></li>
                             <li class="scroll-to-section"><a href="#chefs">Chefs</a></li>
                             <li class="submenu">
@@ -84,7 +68,7 @@ https://templatemo.com/tm-558-klassy-cafe
                                     <li><a href="#">Features Page 4</a></li>
                                 </ul>
                             </li>
-                            <!-- <li class=""><a rel="sponsored" href="https://templatemo.com" target="_blank">External URL</a></li> -->
+
                             <li class="scroll-to-section"><a href="#reservation">Contact Us</a></li>
                             @if ($count > 0)
                                 <li class="scroll-to-section"><a
@@ -116,9 +100,7 @@ https://templatemo.com/tm-558-klassy-cafe
                 @endif
                 </li>
                 </ul>
-                <a class='menu-trigger'>
 
-                </a>
                 <!-- ***** Menu End ***** -->
                 </nav>
             </div>
@@ -126,11 +108,11 @@ https://templatemo.com/tm-558-klassy-cafe
         </div>
     </header>
     <!-- ***** Header Area End ***** -->
- 
-     
+
+
     <!-- ***** Footer Start ***** -->
-    <div class="table-responsive mt-32 w-75 mx-auto">
-        <table class="table">
+    <div class="table-responsive   w-75 mx-auto">
+        <table class="table mt-5">
             <thead>
                 <tr>
                     <th>Sl</th>
@@ -142,97 +124,103 @@ https://templatemo.com/tm-558-klassy-cafe
             </thead>
             <tbody>
                 @if (Session::has('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                     <strong>{{session('success')}}</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>{{ session('success') }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                 @endif
                 @if (Session::has('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                     <strong>{{session('error')}}</strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>{{ session('error') }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                 @endif
-                <form action="{{route('user.order.confirm')}}" method="POST">
+                <form action="{{ route('user.order.confirm') }}" method="POST">
                     @csrf
                     @forelse ($data as $key => $data)
-                    <tr>
-                        <td>{{ ++$key }}</td>
-                        <td>
-                            <input type="text" name="foodname[]" id="" value=" {{ $data->food->title }}" hidden>
-                            {{ $data->food->title }}
-                        </td>
+                        <tr>
+                            <td>{{ ++$key }}</td>
+                            <td>
+                                <input type="text" name="foodname[]" id="" value=" {{ $data->food->title }}"
+                                    hidden>
+                                {{ $data->food->title }}
+                            </td>
 
-                       
-                        <td>
-                            <input type="text" name="quantity[]" id="" value="    {{ $data->quantity }}" hidden>
-                            {{ $data->quantity }}
-                        </td>
-                        <td>
-                            <input type="text" name="price[]" id="" value="    {{ $data->price }}" hidden>
-                            {{ $data->price }}
-                        </td>
-                        
 
-                        <td>
-                            {{-- <a class="btn btn-sm btn-primary"
-                                href="{{ route('admin.chefs.edit', $data->id) }}">Edit</a>  --}}
-                       <a class="btn btn-sm btn-danger"   
-                                href="{{ route('user.cart.remove', $data->id) }}">Remove</a></td>
-                    </tr>
-                   
+                            <td>
+                                <input type="text" name="quantity[]" id=""
+                                    value="    {{ $data->quantity }}" hidden>
+                                {{ $data->quantity }}
+                            </td>
+                            <td>
+                                <input type="text" name="price[]" id="" value="    {{ $data->price }}"
+                                    hidden>
+                                {{ $data->price }}
+                            </td>
+
+
+                            <td>
+
+                                <a class="btn btn-sm btn-danger"
+                                    href="{{ route('user.cart.remove', $data->id) }}">Remove</a>
+                            </td>
+                        </tr>
+
+
+                        <div align="center">
+                            <button class="btn btn-primary text-danger" type="button" id="order">Order Now</button>
+                        </div>
+
+                        <div align="center " id="apear" style="display: none">
+                            <div>
+                                <label for="">Name</label>
+                                <input type="text" name="name" id="" placeholder="name">
+                            </div>
+                            <div class="my-3">
+                                <label for="">Phone</label>
+                                <input type="number" name="phone" id="" placeholder="phone">
+                            </div>
+                            <div>
+                                <label for="">Address</label>
+                                <input type="text" name="address" id="" placeholder="address">
+                            </div>
+                            <div>
+                                <input class="btn btn-sm btn-success mt-3 text-danger" type="submit" name=""
+                                    id="" value="Order confirm">
+                                <button class="btn btn-danger" type="button" id="close">Close</button>
+                            </div>
+                            <div>
+
+                            </div>
+
+                        </div>
+
                     @empty
-                    <h1>No Data Found</h1>
-                        
+                        <h1>No Data Found</h1>
                     @endforelse
-               
-                    <div align="center " >
-                        <button      class="btn btn-primary text-danger" type="button" id="order">Order Now</button>
-                     </div>
-                 
-                      <div align="center " id="apear" style="display: none">
-                         <div>
-                             <label for="">Name</label>
-                             <input type="text" name="name" id="" placeholder="name">
-                         </div>
-                         <div class="my-3">
-                             <label for="">Phone</label>
-                             <input type="number" name="phone" id="" placeholder="phone">
-                         </div>
-                         <div>
-                             <label for="">Address</label>
-                             <input type="text" name="address" id="" placeholder="address">
-                         </div>
-                         <div>
-                             <input class="btn btn-sm btn-success mt-3 text-danger" type="submit" name="" id="" value="Order confirm">
-                             <button class="btn btn-danger" type="button" id="close">Close</button>
-                         </div>
-                         <div>
-                            
-                         </div>
-                 
-                      </div>
+
+
             </tbody>
+
         </table>
     </div>
-   
+
+
     </form>
-       
-     <script>
-         $("#order").click(
-            function()
-            {
+
+    <script>
+        $("#order").click(
+            function() {
                 $("#apear").show();
                 $("#order").hide();
             }
-         );
-         $("#close").click(function(){
+        );
+        $("#close").click(function() {
             $("#apear").hide();
             $("#order").show();
 
-         });
-
-     </script>
+        });
+    </script>
 
 
     <!-- jQuery -->
