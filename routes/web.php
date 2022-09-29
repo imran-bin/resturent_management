@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
     Route::get('/', [HomeController::class, 'index']);
     Route::get('/redirect', [HomeController::class, 'redirect']);
     // user
-Route::prefix('users')->group(function () {
+Route::prefix('users')->middleware('auth')->group(function () {
     Route::get('/user', [UserController::class, 'index'])->name('users');
     Route::get('/delete/{id}', [UserController::class, 'destory'])->name('user.delete');;
     Route::get('/cart/info/{id}', [UserController::class, 'userCartIndex'])->name('user.cart.info');

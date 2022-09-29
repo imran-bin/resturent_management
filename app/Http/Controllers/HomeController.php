@@ -9,31 +9,30 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
+    
+      
+    
     public function index()
-    {    
- 
-       
-        if(Auth::id())
-        {
-            return redirect('redirect');
-        }
-        $foods =Food ::all();
-        $chefs=Chefs::all();
-        $id=Auth::id();
-            $count=Cart::where('user_id',$id)->count();
-
-        return view('home',compact('foods','chefs','count' ));
-    }
-    public function redirect( )
     {
-        $foods =Food ::all();
-        $chefs=Chefs::all();
-        $id=Auth::id();
-        $count=Cart::where('user_id',$id)->count();
-        $userType=Auth::user()->usertype;
-        return($userType=='1')
-        ? view('Admin.admin_home')
-        : view('home',compact('foods','chefs','count'));
+
+        $foods = Food::all();
+        $chefs = Chefs::all();
+        $id = Auth::id();
+        $count = Cart::where('user_id', $id)->count();
+        return (Auth::id())
+            ?  redirect('redirect')
+            : view('home', compact('foods', 'chefs', 'count'));
         
+    }
+    public function redirect()
+    {
+        $foods = Food::all();
+        $chefs = Chefs::all();
+        $id = Auth::id();
+        $count = Cart::where('user_id', $id)->count();
+        $userType = Auth::user()->usertype;
+        return ($userType == '1')
+            ? view('Admin.admin_home')
+            : view('home', compact('foods', 'chefs', 'count'));
     }
 }
