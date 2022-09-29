@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     public function index()
-    {   
+    {    
+ 
+       
         if(Auth::id())
         {
             return redirect('redirect');
@@ -26,22 +28,12 @@ class HomeController extends Controller
     {
         $foods =Food ::all();
         $chefs=Chefs::all();
-    
+        $id=Auth::id();
+        $count=Cart::where('user_id',$id)->count();
         $userType=Auth::user()->usertype;
-        if($userType=='1')
-        {
-            return view('Admin.admin_home');
-        }
-        else
-        {
-            
-
-
-
- 
-            $id=Auth::id();
-            $count=Cart::where('user_id',$id)->count();
-            return view('home',compact('foods','chefs','count')); 
-        }
+        return($userType=='1')
+        ? view('Admin.admin_home')
+        : view('home',compact('foods','chefs','count'));
+        
     }
 }

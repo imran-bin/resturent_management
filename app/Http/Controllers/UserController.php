@@ -42,15 +42,13 @@ class UserController extends Controller
         $reservation->time=$request->time;
         $reservation->message=$request->message;
         
-         if(Auth::id())
-         {
+ 
+        
             return($reservation->save())
             ? redirect()->back()->with('success','Reservation   Successfully!')
             : redirect()->back()->with('error','Reservation   booking failed!');
-         }
-        else{
-            return redirect('/login');
-        }
+          
+         
     }
     public function userFoodCart(Request $request,$id)
     {
@@ -59,8 +57,8 @@ class UserController extends Controller
             
         ]);
         
-        if(Auth::id())
-        {
+      
+        
             if ($validator->fails()) {
                 return back()->with('error', $validator->messages()->all()[0])->withInput();
             }
@@ -75,12 +73,8 @@ class UserController extends Controller
             ? redirect()->back()->with('success','food Cart Successfully!')
             : redirect()->back()->with('error','food Cart failed!');
             
-        }
-        else
-        {
-             
-            return redirect('login') ;
-        }
+        
+        
     }
     public function userCartIndex($id)
     {
